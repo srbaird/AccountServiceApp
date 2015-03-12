@@ -1,0 +1,20 @@
+Authentication mechanisms such as a web form-login processing filter are injected with a reference to the ProviderManager and will call it to handle their authentication requests. 
+
+<bean id="authenticationManager"
+     class="org.springframework.security.authentication.ProviderManager">
+  <property name="providers">
+    <list>
+      <ref local="daoAuthenticationProvider"/>
+      <ref local="anonymousAuthenticationProvider"/>
+      <ref local="ldapAuthenticationProvider"/>
+    </list>
+  </property>
+</bean>
+
+
+
+<bean id="daoAuthenticationProvider"
+    class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+  <property name="userDetailsService" ref="inMemoryDaoImpl"/>
+  <property name="passwordEncoder" ref="passwordEncoder"/>
+</bean>
