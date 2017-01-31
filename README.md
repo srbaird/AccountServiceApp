@@ -25,7 +25,7 @@ Encryption uses [bcryprt]( https://en.wikipedia.org/wiki/Bcrypt) through the sup
 
 ___
 
-For convenience the project incorporates both the definition of the data model requirements and an implementation using Hibernate and a relational database design. In normal circumstances these would be separate projects and this may be easily achieved by separating out the relevant Hibernate package if required.
+For convenience the project incorporates both the definition of the data model requirements and an implementation using Hibernate for a relational database design. In normal circumstances these would be separate projects and this may be easily achieved by separating out the relevant Hibernate package if required.
 
 The data model is quite simple and naturally open to enhancements but suffices as a starting point. The following diagram shows that it basically implements a many-to-many relationship between users and accounts. Access can be controlled at any of the AccountUser, Account or Application levels and the Application can be closed to new sign-ups if required.
 

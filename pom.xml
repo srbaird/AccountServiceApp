@@ -119,7 +119,7 @@
 			<artifactId>spring-security-core</artifactId>
 			<version>${springSecurityFrameworkVersion}</version>
 		</dependency>
-				<dependency>
+		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
 			<version>${springFrameworkVersion}</version>
