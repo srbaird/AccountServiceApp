@@ -109,6 +109,7 @@ public class SimpleUser implements User {
 	@Override
 	public void setAccounts(Set<? extends Account> accounts) {
 
+		logger.debug("Setting accounts to: {}", accounts);
 		this.accounts = accounts == null ? null
 				: accounts.stream().map(a -> SimpleComponentFactory.getAccount(a)).collect(Collectors.toSet());
 	}
