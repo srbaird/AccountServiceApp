@@ -50,7 +50,6 @@ public class AccountServiceAppTestCreateLogin extends AbstractHibernateTestCase 
 	//
 	private Application resultApplication;
 	private final String applicationName = UUID.randomUUID().toString();
-	private Integer applicationId;
 	//
 	private final AccountServiceRole expRole = DataConstants.DEFAULT_ACCOUNT_SERVICE_ROLE;
 	//
@@ -58,16 +57,13 @@ public class AccountServiceAppTestCreateLogin extends AbstractHibernateTestCase 
 	private final String userName = UUID.randomUUID().toString();
 	private final String userEmail = UUID.randomUUID().toString();
 	private final String userPassword = UUID.randomUUID().toString();
-	private Integer userId = null;
+
 	//
 	private Account resultAccount;
 	private final String expResourceName = UUID.randomUUID().toString();
-	private Integer accountId = null;
 	//
 	private AccessLevel resultAccessLevel;
 	//
-	private AccountUser accountUser;
-	private AccountUser resultAccountUser;
 	//
 	private final Date createDate = getDateWithoutMillis();
 
@@ -350,7 +346,6 @@ public class AccountServiceAppTestCreateLogin extends AbstractHibernateTestCase 
 		// Persist it
 		//
 		resultApplication = dao.createApplication(application);
-		applicationId = resultApplication.getId();
 		//
 		// Create the default Access Level
 		//
@@ -371,8 +366,6 @@ public class AccountServiceAppTestCreateLogin extends AbstractHibernateTestCase 
 		// Persist it
 		//
 		resultUser = dao.createUser(user);
-
-		userId = resultUser.getId();
 	}
 
 	private void createAccountFor(Application application) {
@@ -400,7 +393,7 @@ public class AccountServiceAppTestCreateLogin extends AbstractHibernateTestCase 
 		//
 		// Persist it
 		//
-		resultAccountUser = dao.createAccountUser(accountUser);
+		dao.createAccountUser(accountUser);
 	}
 
 	private AccountServiceAuthentication standardAuthentication() {
