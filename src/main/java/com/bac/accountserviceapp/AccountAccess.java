@@ -5,62 +5,66 @@
  */
 package com.bac.accountserviceapp;
 
-import com.bac.accountserviceapp.data.AccessLevel;
-import com.bac.accountserviceapp.data.Account;
-import com.bac.accountserviceapp.data.AccountUser;
-import com.bac.accountserviceapp.data.Application;
-import com.bac.accountserviceapp.data.User;
-
 /**
  *
  * @author user0001
  */
 public interface AccountAccess {
 
-    Account getAccount(Integer id);
+	AccessLevel getAccessLevel(Integer id);
 
-    Account createAccount(Account account);
+	AccessLevel createAccessLevel(AccessLevel accessLevel);
 
-    Account updateAccount(Account account);
+	AccessLevel updateAccessLevel(AccessLevel accessLevel);
 
-    void deleteAccount(Account account);
+	void deleteAccessLevel(AccessLevel accessLevel);
 
-    AccountUser getAccountUser(AccountUser accountUser);
+	AccessLevel getAccessLevelBySecondaryKey(AccessLevel accessLevel);
 
-    AccountUser createAccountUser(AccountUser accountUser);
+	// *************************************************
 
-    AccountUser updateAccountUser(AccountUser accountUser);
+	Account getAccount(Integer id);
 
-    void deleteAccountUser(AccountUser accountUser);
+	Account createAccount(Account account);
 
-    User getUser(Integer id);
+	Account updateAccount(Account account);
 
-    User createUser(User user);
+	void deleteAccount(Account account);
 
-    User updateUser(User user);
+	// *************************************************
 
-    void deleteUser(User user);
+	AccountUser getAccountUser(AccountUser accountUser);
 
-    User getUserBySecondaryKey(User user);
+	AccountUser createAccountUser(AccountUser accountUser);
 
-    AccessLevel getAccessLevel(Integer id);
+	AccountUser updateAccountUser(AccountUser accountUser);
 
-    AccessLevel createAccessLevel(AccessLevel accessLevel);
+	void deleteAccountUser(AccountUser accountUser);
+	
+	AccountUser getAccountUserBySecondaryKey(AccountUser accountUser);
 
-    AccessLevel updateAccessLevel(AccessLevel accessLevel);
+	// *************************************************
 
-    void deleteAccessLevel(AccessLevel accessLevel);
+	Application getApplication(Integer id);
 
-    AccessLevel getAccessLevelBySecondaryKey(AccessLevel accessLevel);
+	Application createApplication(Application application);
 
-    Application getApplication(Integer id);
+	Application updateApplication(Application application);
 
-    Application createApplication(Application application);
+	void deleteApplication(Application application);
 
-    Application updateApplication(Application application);
+	Application getApplicationBySecondaryKey(Application application);
 
-    void deleteApplication(Application application);
+	// *************************************************
 
-    Application getApplicationBySecondaryKey(Application application);
+	User getUser(Integer id);
+
+	User createUser(User user);
+
+	User updateUser(User user);
+
+	void deleteUser(User user);
+
+	User getUserBySecondaryKey(User user);
 
 }

@@ -3,21 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.bac.accountserviceapp;
+package com.bac.accountserviceapp.data;
 
 import com.bac.accountservice.AccountServiceRole;
-import com.bac.accountserviceapp.data.Account;
-import com.bac.accountserviceapp.data.AccountUser;
-import com.bac.accountserviceapp.data.Application;
-import com.bac.accountserviceapp.data.User;
+import com.bac.accountserviceapp.Account;
+import com.bac.accountserviceapp.AccountUser;
+import com.bac.accountserviceapp.Application;
+import com.bac.accountserviceapp.User;
 
 /**
  *
  * @author user0001
  */
 public abstract class AccountServiceStrategy {
-
-    protected abstract void init();
 
     protected abstract AccountServiceRole getDefaultAccountServiceRole();
 

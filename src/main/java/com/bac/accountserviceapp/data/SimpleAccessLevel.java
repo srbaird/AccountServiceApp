@@ -6,6 +6,7 @@
 package com.bac.accountserviceapp.data;
 
 import com.bac.accountservice.AccountServiceRole;
+import com.bac.accountserviceapp.AccessLevel;
 
 /**
  *

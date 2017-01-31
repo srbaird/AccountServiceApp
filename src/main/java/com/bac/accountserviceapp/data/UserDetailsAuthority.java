@@ -8,6 +8,9 @@ package com.bac.accountserviceapp.data;
 
 import java.util.Objects;
 
+import com.bac.accountserviceapp.AccessLevel;
+import com.bac.accountserviceapp.Application;
+
 /**
  *
  * @author user0001

@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.bac.accountserviceapp.data.mysql;
+package com.bac.accountserviceapp.hibernate;
 
 
-import com.bac.accountserviceapp.data.ApplicationAccountEntity;
 import java.io.Serializable;
-import org.hibernate.Query;
+
+import com.bac.accountserviceapp.ApplicationAccountEntity;
 
 /**
  *
@@ -20,7 +20,5 @@ public interface ApplicationAccountEntityProxy extends Serializable {
 
     void setDelegate(ApplicationAccountEntity delegate);
 
-    String getSecondaryKeyQueryName();
 
-    void setSecondaryKeyQuery(Query query);
 }

@@ -5,6 +5,8 @@
  */
 package com.bac.accountserviceapp.data;
 
+import com.bac.accountserviceapp.Application;
+
 /**
  *
  * @author user0001

@@ -14,6 +14,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.bac.accountserviceapp.AccessLevel;
+import com.bac.accountserviceapp.Application;
+import com.bac.accountserviceapp.User;
+
 /**
  *
  * @author user0001
@@ -27,10 +31,6 @@ public class AccountServiceUserDetails implements UserDetails {
     private boolean accountNonLocked = true;
     private boolean credentialsNonExpired = true;
     private boolean enabled;
-    //
-    private final Character active = 'Y';
-    private final String authoritySeparator = "::";
-    private final String authorityFormat = "%s%s%s";
 
     private final Set<SimpleGrantedAuthority> authorities = new HashSet<>();
     // logger    
@@ -40,12 +40,15 @@ public class AccountServiceUserDetails implements UserDetails {
 
         if (user != null) {
 
-            userName = user.getUserEmail();
-            password = new String(user.getUserPassword());
+            userName = user.getUserKey();
+            password = user.getUserPassword() == null ? null : new String(user.getUserPassword());
             enabled = user.isEnabled();
+        } else {
+        	logger.debug("Supplied User is null");
         }
 
         if (userDetailsAuthorities == null) {
+        	logger.debug("No user details authorities supplied");
             return;
         }
         for (UserDetailsAuthority uda : userDetailsAuthorities) {
@@ -54,7 +57,7 @@ public class AccountServiceUserDetails implements UserDetails {
             if (application != null && accessLevel != null) {
                 if (application.isEnabled() ) {
                     String serviceRole = accessLevel.getAccountServiceRole() == null ? "No available role" : accessLevel.getAccountServiceRole().name();
-                    String authority = String.format(authorityFormat, application.getName(), authoritySeparator, serviceRole);
+                    String authority = String.format(DataConstants.AUTHORITY_FORMAT, application.getName(), DataConstants.AUTHORITY_SEPARATOR, serviceRole);
                     authorities.add(new SimpleGrantedAuthority(authority));
                 }
             }

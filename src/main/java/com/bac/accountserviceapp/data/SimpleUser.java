@@ -7,6 +7,13 @@ package com.bac.accountserviceapp.data;
 
 import java.util.Date;
 import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.bac.accountserviceapp.Account;
+import com.bac.accountserviceapp.User;
 
 /**
  *
@@ -14,110 +21,107 @@ import java.util.Set;
  */
 public class SimpleUser implements User {
 
-    private Integer id;
-    private String userName;
-    private String userEmail;
-    private byte[] userPassword;
-    private byte[] passwordSalt;
-    private Character active;
-    private final Character DEFAULT_ACTIVE = 'N';
-    private Date createDate;
-    private Set<? extends Account> accounts;
-    private boolean isEnabled;
+	private Integer id;
+	private String userName;
+	private String userKey;
+	private byte[] userPassword;
+	private byte[] passwordSalt;
+	private Date createDate;
+	private Set<? extends Account> accounts;
+	private boolean isEnabled;
 
-    public SimpleUser() {
+    // logger    
+    private static final Logger logger = LoggerFactory.getLogger(SimpleUser.class);
+    
+	public SimpleUser() {
 
-    }
+	}
 
-    @Override
-    public Integer getId() {
-        return id;
-    }
+	@Override
+	public Integer getId() {
+		return id;
+	}
 
-    @Override
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	@Override
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    @Override
-    public String getUserName() {
-        return userName;
-    }
+	@Override
+	public String getUserName() {
+		return userName;
+	}
 
-    @Override
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+	@Override
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
-    @Override
-    public String getUserEmail() {
-        return userEmail;
-    }
+	@Override
+	public String getUserKey() {
+		return userKey;
+	}
 
-    @Override
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-    }
+	@Override
+	public void setUserKey(String userKey) {
+		this.userKey = userKey;
+	}
 
-    @Override
-    public byte[] getUserPassword() {
-        return userPassword;
-    }
+	@Override
+	public byte[] getUserPassword() {
+		return userPassword;
+	}
 
-    @Override
-    public void setUserPassword(byte[] userPassword) {
-        this.userPassword = userPassword;
-    }
+	@Override
+	public void setUserPassword(byte[] userPassword) {
+		this.userPassword = userPassword;
+	}
 
-    @Override
-    public byte[] getPasswordSalt() {
-        return passwordSalt;
-    }
+	@Override
+	public byte[] getPasswordSalt() {
+		return passwordSalt;
+	}
 
-    @Override
-    public void setPasswordSalt(byte[] pSalt) {
-        this.passwordSalt = pSalt;
-    }
+	@Override
+	public void setPasswordSalt(byte[] pSalt) {
+		this.passwordSalt = pSalt;
+	}
 
-//    @Override
-//    public Character getActive() {
-//        return active == null ? DEFAULT_ACTIVE : active;
-//    }
 
-//    @Override
-//    public void setActive(Character active) {
-//        this.active =  active == null ? DEFAULT_ACTIVE : active;
-//    }
+	@Override
+	public Date getCreateDate() {
+		return createDate;
+	}
 
-    @Override
-    public Date getCreateDate() {
-        return createDate;
-    }
+	@Override
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
 
-    @Override
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
+	@Override
+	public Set<? extends Account> getAccounts() {
+		return accounts;
+	}
 
-    @Override
-    public Set<? extends Account> getAccounts() {
-        return accounts;
-    }
+	/*
+	 * Restrict any set of Accounts to SimpleAccounts
+	 */
+	@Override
+	public void setAccounts(Set<? extends Account> accounts) {
 
-    @Override
-    public void setAccounts(Set<? extends Account> accounts) {
-        this.accounts = accounts;
-    }
+		this.accounts = accounts == null ? null
+				: accounts.stream().map(a -> SimpleComponentFactory.getAccount(a)).collect(Collectors.toSet());
+	}
 
-    @Override
-    public void setEnabled(boolean isEnabled) {
-        
-        this.isEnabled = isEnabled;
-    }
+	@Override
+	public void setEnabled(boolean isEnabled) {
 
-    @Override
-    public boolean isEnabled() {
-        
-        return isEnabled;
-    }
+		this.isEnabled = isEnabled;
+	}
+
+	@Override
+	public boolean isEnabled() {
+
+		return isEnabled;
+	}
 }

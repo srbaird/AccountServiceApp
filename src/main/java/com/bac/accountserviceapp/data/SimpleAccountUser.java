@@ -7,6 +7,8 @@ package com.bac.accountserviceapp.data;
 
 import java.util.Date;
 
+import com.bac.accountserviceapp.AccountUser;
+
 /**
  *
  * @author user0001

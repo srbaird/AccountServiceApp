@@ -5,25 +5,33 @@
  */
 package com.bac.accountserviceapp.data;
 
-import com.bac.accountservice.AccountServiceRole;
-import static com.bac.accountservice.AccountServiceRole.*;
-import java.util.Arrays;
+import static com.bac.accountservice.AccountServiceRole.ADMIN;
+import static com.bac.accountservice.AccountServiceRole.GUEST;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
+
+import com.bac.accountservice.AccountServiceRole;
+import com.bac.accountserviceapp.AccessLevel;
+import com.bac.accountserviceapp.Application;
+import com.bac.accountserviceapp.User;
 
 /**
  *
@@ -31,459 +39,450 @@ import org.springframework.security.core.GrantedAuthority;
  */
 public class AccountServiceUserDetailsTest {
 
-    private AccountServiceUserDetails instance;
-    private Collection<UserDetailsAuthority> userDetailsAuthorities;
-    //
-    private final String authoritySeparator = "::";
-    private final AccountServiceRole accessLevelRole = GUEST;
+	private AccountServiceUserDetails instance;
+	private Collection<UserDetailsAuthority> userDetailsAuthorities;
+	//
+	private final AccountServiceRole ACCESS_LEVEL_ROLE = GUEST;
 
-    // logger    
-    private static final Logger logger = LoggerFactory.getLogger(AccountServiceUserDetailsTest.class);
+	// logger
+	private static final Logger logger = LoggerFactory.getLogger(AccountServiceUserDetailsTest.class);
 
-    public AccountServiceUserDetailsTest() {
-    }
+	public AccountServiceUserDetailsTest() {
+	}
 
-    @BeforeClass
-    public static void setUpClass() {
-    }
+	@BeforeClass
+	public static void setUpClass() {
+	}
 
-    @AfterClass
-    public static void tearDownClass() {
-    }
+	@AfterClass
+	public static void tearDownClass() {
+	}
 
-    @Before
-    public void setUp() {
-        instance = new AccountServiceUserDetails(null, null);
-        userDetailsAuthorities = new HashSet<>();
-    }
+	@Before
+	public void setUp() {
+		instance = new AccountServiceUserDetails(null, null);
+		userDetailsAuthorities = new HashSet<>();
+	}
 
-    @After
-    public void tearDown() {
-    }
+	@After
+	public void tearDown() {
+	}
 
-    /**
-     * Test of getAuthorities method, of class AccountServiceUserDetails.
-     */
-    @Test
-    public void testGetAuthorities_NullDetails() {
+	/**
+	 * Newly instantiated instance should have an empty set of authorities
+	 */
+	@Test
+	public void empty_Service_Should_Have_No_Authorities() {
 
-        logger.info("testGetAuthorities_NullDetails");
-        Collection<? extends GrantedAuthority> result = instance.getAuthorities();
-        assertNotNull(result);
-        assertTrue(result instanceof Set<?>);
-        int expSize = 0;
-        int resultSize = result.size();
-        assertEquals(expSize, resultSize);
-    }
+		logger.info("empty_Service_Should_Have_No_Authorities");
 
-    /**
-     * Test of getPassword method, of class AccountServiceUserDetails.
-     */
-    @Test
-    public void testGetPassword_NullDetails() {
+		Collection<? extends GrantedAuthority> result = instance.getAuthorities();
+		assertTrue(result instanceof Set<?>);
+		int empty = 0;
+		assertEquals(empty, result.size());
+	}
 
-        logger.info("testGetPassword_NullDetails");
-        String expResult = null;
-        String result = instance.getPassword();
-        assertEquals(expResult, result);
-    }
+	/**
+	 * Newly instantiated instance should have a null password
+	 */
+	@Test
+	public void empty_Service_Should_Have_Null_Password() {
 
-    /**
-     * Test of getUsername method, of class AccountServiceUserDetails.
-     */
-    @Test
-    public void testGetUsername_NullDetails() {
+		logger.info("empty_Service_Should_Have_Null_Password");
 
-        logger.info("testGetUsername_NullDetails");
-        String expResult = null;
-        String result = instance.getUsername();
-        assertEquals(expResult, result);
-    }
+		String expResult = null;
+		assertEquals(expResult, instance.getPassword());
+	}
 
-    /**
-     * Test of isAccountNonExpired method, of class AccountServiceUserDetails.
-     */
-    @Test
-    public void testIsAccountNonExpired_NullDetails() {
+	/**
+	 * Newly instantiated instance should have a null User name
+	 */
+	@Test
+	public void empty_Service_Should_Have_Null_Username() {
 
-        logger.info("testIsAccountNonExpired_NullDetails");
-        boolean expResult = true;
-        boolean result = instance.isAccountNonExpired();
-        assertEquals(expResult, result);
-    }
+		logger.info("empty_Service_Should_Have_Null_Username");
 
-    /**
-     * Test of isAccountNonLocked method, of class AccountServiceUserDetails.
-     */
-    @Test
-    public void testIsAccountNonLocked_NullDetails() {
+		String expResult = null;
+		assertEquals(expResult, instance.getUsername());
+	}
 
-        logger.info("testIsAccountNonLocked_NullDetails");
-        boolean expResult = true;
-        boolean result = instance.isAccountNonLocked();
-        assertEquals(expResult, result);
-    }
+	/**
+	 * Newly instantiated instance should not have an expired account
+	 */
+	@Test
+	public void empty_Service_Should_Not_Have_Expired_Account() {
 
-    /**
-     * Test of isCredentialsNonExpired method, of class
-     * AccountServiceUserDetails.
-     */
-    @Test
-    public void testIsCredentialsNonExpired_NullDetails() {
+		logger.info("empty_Service_Should_Not_Have_Expired_Account");
+		boolean expResult = true;
+		assertEquals(expResult, instance.isAccountNonExpired());
+	}
 
-        logger.info("testIsCredentialsNonExpired_NullDetails");
-        boolean expResult = true;
-        boolean result = instance.isCredentialsNonExpired();
-        assertEquals(expResult, result);
-    }
+	/**
+	 * Newly instantiated instance should not have a locked account
+	 */
+	@Test
+	public void empty_Service_Should_Not_Have_Locked_Account() {
 
-    /**
-     * Test of isEnabled method, of class AccountServiceUserDetails.
-     */
-    @Test
-    public void testIsEnabled_NullDetails() {
+		logger.info("empty_Service_Should_Not_Have_Locked_Account");
 
-        logger.info("testIsEnabled_NullDetails");
-        boolean expResult = false;
-        boolean result = instance.isEnabled();
-        assertEquals(expResult, result);
-    }
+		boolean expResult = true;
+		assertEquals(expResult, instance.isAccountNonLocked());
+	}
 
-    @Test
-    public void testGetUsername() {
+	/**
+	 * Newly instantiated instance should not have expired credentials
+	 */
+	@Test
+	public void empty_Service_Should_Not_Have_Expired_Credentials() {
 
-        logger.info("testGetUsername");
-        String expUserName = UUID.randomUUID().toString();
-        String expPassword = UUID.randomUUID().toString();
-        User user = getUser(expUserName, expPassword, true);
-        //
-        instance = new AccountServiceUserDetails(user, null);
-        String result = instance.getUsername();
-        assertEquals(expUserName, result);
-    }
+		logger.info("empty_Service_Should_Not_Have_Expired_Credentials");
+		boolean expResult = true;
+		assertEquals(expResult, instance.isCredentialsNonExpired());
+	}
 
-    @Test
-    public void testGetPassword() {
+	/**
+	 * Newly instantiated instance should not be enabled
+	 */
+	@Test
+	public void empty_Service_Should_Not_Be_Enabled() {
 
-        logger.info("testGetPassword");
-        String expUserName = UUID.randomUUID().toString();
-        String expPassword = UUID.randomUUID().toString();
-        User user = getUser(expUserName, expPassword, true);
-        //
-        instance = new AccountServiceUserDetails(user, null);
-        String result = instance.getPassword();
-        assertEquals(expPassword, result);
-    }
+		logger.info("empty_Service_Should_Not_Be_Enabled");
 
-    @Test
-    public void testIsAccountNonExpired() {
+		boolean expResult = false;
+		assertEquals(expResult, instance.isEnabled());
+	}
 
-        logger.info("testIsAccountNonExpired");
-        boolean expIsAccountNonExpired = true;
-        //
-        String expUserName = UUID.randomUUID().toString();
-        String expPassword = UUID.randomUUID().toString();
-        User user = getUser(expUserName, expPassword, true);
-        //
-        instance = new AccountServiceUserDetails(user, null);
-        boolean result = instance.isAccountNonExpired();
-        assertEquals(expIsAccountNonExpired, result);
-        //
-        user = getUser(expUserName, expPassword, false);
-        instance = new AccountServiceUserDetails(user, null);
-        result = instance.isAccountNonExpired();
-        assertEquals(expIsAccountNonExpired, result);
-    }
+	/**
+	 * Service should return correct User name
+	 */
+	@Test
+	public void service_Should_Return_Correct_Username() {
 
-    @Test
-    public void testIsAccountNonLocked() {
+		logger.info("testGetUsername");
+		final String expUserKey = UUID.randomUUID().toString();
+		final String expPassword = UUID.randomUUID().toString();
+		User user = getMockUser(expUserKey, expPassword, true);
+		//
+		instance = new AccountServiceUserDetails(user, null);
+		assertEquals(expUserKey, instance.getUsername());
+	}
 
-        logger.info("testIsAccountNonLocked");
-        boolean expIsAccountNonLocked = true;
-        //
-        String expUserName = UUID.randomUUID().toString();
-        String expPassword = UUID.randomUUID().toString();
-        User user = getUser(expUserName, expPassword, true);
-        //
-        instance = new AccountServiceUserDetails(user, null);
-        boolean result = instance.isAccountNonLocked();
-        assertEquals(expIsAccountNonLocked, result);
-        //
-        user = getUser(expUserName, expPassword, false);
-        instance = new AccountServiceUserDetails(user, null);
-        result = instance.isAccountNonLocked();
-        assertEquals(expIsAccountNonLocked, result);
-    }
+	/**
+	 * Service should return correct User password
+	 */
+	@Test
+	public void service_Should_Return_Correct_Password() {
 
-    @Test
-    public void testIsCredentialsNonExpired() {
+		logger.info("testGetPassword");
+		final String expUserKey = UUID.randomUUID().toString();
+		final String expPassword = UUID.randomUUID().toString();
+		User user = getMockUser(expUserKey, expPassword, true);
+		//
+		instance = new AccountServiceUserDetails(user, null);
+		assertEquals(expPassword, instance.getPassword());
+	}
 
-        logger.info("testIsCredentialsNonExpired");
-        boolean expIsCredentialsNonExpired = true;
-        //
-        String expUserName = UUID.randomUUID().toString();
-        String expPassword = UUID.randomUUID().toString();
-        User user = getUser(expUserName, expPassword, true);
-        //
-        instance = new AccountServiceUserDetails(user, null);
-        boolean result = instance.isCredentialsNonExpired();
-        assertEquals(expIsCredentialsNonExpired, result);
-        //
-        user = getUser(expUserName, expPassword, false);
-        instance = new AccountServiceUserDetails(user, null);
-        result = instance.isCredentialsNonExpired();
-        assertEquals(expIsCredentialsNonExpired, result);
-    }
+	/**
+	 * Service should return the correct Account status
+	 */
+	@Test
+	public void service_Should_Return_Correct_Account_Status() {
 
-    @Test
-    public void testIsEnabled() {
+		logger.info("service_Should_Return_Correct_Account_Status");
+		boolean expIsAccountNonExpired = true;
+		//
+		final String expUserKey = UUID.randomUUID().toString();
+		final String expPassword = UUID.randomUUID().toString();
+		User user = getMockUser(expUserKey, expPassword, true);
+		//
+		instance = new AccountServiceUserDetails(user, null);
+		assertEquals(expIsAccountNonExpired, instance.isAccountNonExpired());
+		//
+		user = getMockUser(expUserKey, expPassword, false);
+		instance = new AccountServiceUserDetails(user, null);
+		assertEquals(expIsAccountNonExpired, instance.isAccountNonExpired());
+	}
 
-        logger.info("testIsEnabled");
-        boolean expIsEnabled = true;
-        //
-        String expUserName = UUID.randomUUID().toString();
-        String expPassword = UUID.randomUUID().toString();
-        User user = getUser(expUserName, expPassword, true);
-        //
-        instance = new AccountServiceUserDetails(user, null);
-        boolean result = instance.isEnabled();
-        assertEquals(expIsEnabled, result);
-        //
-        expIsEnabled = false;
-        user = getUser(expUserName, expPassword, false);
-        instance = new AccountServiceUserDetails(user, null);
-        result = instance.isEnabled();
-        assertEquals(expIsEnabled, result);
-    }
+	/**
+	 * Service should return the correct Account lock status
+	 */
+	@Test
+	public void service_Should_Return_Correct_Account_Lock_Status() {
 
-    @Test
-    public void testGetAuthorities_NoAuthorities() {
+		logger.info("service_Should_Return_Correct_Account_Lock_Status");
+		boolean expIsAccountNonLocked = true;
+		//
+		String expUserKey = UUID.randomUUID().toString();
+		String expPassword = UUID.randomUUID().toString();
+		User user = getMockUser(expUserKey, expPassword, true);
+		//
+		instance = new AccountServiceUserDetails(user, null);
+		assertEquals(expIsAccountNonLocked, instance.isAccountNonLocked());
+		//
+		user = getMockUser(expUserKey, expPassword, false);
+		instance = new AccountServiceUserDetails(user, null);
+		assertEquals(expIsAccountNonLocked, instance.isAccountNonLocked());
+	}
 
-        logger.info("testGetAuthorities_NoAuthorities");
-        instance = new AccountServiceUserDetails(null, userDetailsAuthorities);
-        Collection<? extends GrantedAuthority> result = instance.getAuthorities();
-        assertNotNull(result);
-        assertTrue(result instanceof Set<?>);
-        int expSize = 0;
-        int resultSize = result.size();
-        assertEquals(expSize, resultSize);
-    }
+	/**
+	 * Service should return the correct Credential status
+	 */
+	@Test
+	public void service_Should_Return_Correct_Credential_Status() {
 
-    @Test
-    public void testGetAuthorities_OneInvalidAuthority() {
+		logger.info("service_Should_Return_Correct_Credential_Status");
+		boolean expIsCredentialsNonExpired = true;
+		//
+		String expUserKey = UUID.randomUUID().toString();
+		String expPassword = UUID.randomUUID().toString();
+		User user = getMockUser(expUserKey, expPassword, true);
+		//
+		instance = new AccountServiceUserDetails(user, null);
+		assertEquals(expIsCredentialsNonExpired, instance.isCredentialsNonExpired());
+		//
+		user = getMockUser(expUserKey, expPassword, false);
+		instance = new AccountServiceUserDetails(user, null);
+		assertEquals(expIsCredentialsNonExpired, instance.isCredentialsNonExpired());
+	}
 
-        logger.info("testGetAuthorities_OneInvalidAuthority");
-        //
-        //  Inactive application
-        //
-        String expApplicationName = UUID.randomUUID().toString();
-        Integer expAccessLevelId = new Double(Math.random()).intValue();
-        Application application = getApplication(expApplicationName, false);
-        AccessLevel accessLevel = getAccessLevel(expAccessLevelId);
-        userDetailsAuthorities.add(new UserDetailsAuthority(application, accessLevel));
+	/**
+	 * Service should return the correct enabled status
+	 */
+	@Test
+	public void service_Should_Return_Correct_Enabled_Status() {
 
-        instance = new AccountServiceUserDetails(null, userDetailsAuthorities);
-        Collection<? extends GrantedAuthority> result = instance.getAuthorities();
-        assertNotNull(result);
-        assertTrue(result instanceof Set<?>);
-        int expSize = 0;
-        int resultSize = result.size();
-        assertEquals(expSize, resultSize);
-        //
-        //  Inactive account user
-        //
-        expApplicationName = UUID.randomUUID().toString();
-        expAccessLevelId = new Double(Math.random()).intValue();
-        application = getApplication(expApplicationName, false);
-        accessLevel = getAccessLevel(expAccessLevelId);
-        userDetailsAuthorities.clear();
-        userDetailsAuthorities.add(new UserDetailsAuthority(application, accessLevel));
+		logger.info("testIsEnabled");
+		boolean expIsEnabled = true;
+		//
+		String expUserKey = UUID.randomUUID().toString();
+		String expPassword = UUID.randomUUID().toString();
+		User user = getMockUser(expUserKey, expPassword, true);
+		//
+		instance = new AccountServiceUserDetails(user, null);
+		assertEquals(expIsEnabled, instance.isEnabled());
+		//
+		expIsEnabled = false;
+		user = getMockUser(expUserKey, expPassword, false);
+		instance = new AccountServiceUserDetails(user, null);
+		assertEquals(expIsEnabled, instance.isEnabled());
+	}
 
-        instance = new AccountServiceUserDetails(null, userDetailsAuthorities);
-        result = instance.getAuthorities();
-        assertNotNull(result);
-        assertTrue(result instanceof Set<?>);
-        expSize = 0;
-        resultSize = result.size();
-        assertEquals(expSize, resultSize);
-    }
+	/**
+	 * Service should return the correct Authorities
+	 */
+	@Test
+	public void service_Should_Return_The_Correct_Authorities() {
 
-//    @Test
-    public void testGetAuthorities_MultipleInvalidAuthories() {
+		logger.info("service_Should_Return_The_Correct_Authorities");
 
-        logger.info("testGetAuthorities_MultipleInvalidAuthories");
+		instance = new AccountServiceUserDetails(null, userDetailsAuthorities);
+		Collection<? extends GrantedAuthority> result = instance.getAuthorities();
+		assertTrue(result instanceof Set<?>);
+		int empty = 0;
+		assertEquals(empty, result.size());
+	}
 
-        Application application = getApplication(UUID.randomUUID().toString(), false);
-//        AccountUser accountUser = getAccountUser(new Double(Math.random()).intValue(), true);
-        AccessLevel accessLevel = getAccessLevel(new Double(Math.random()).intValue());
-        userDetailsAuthorities.add(new UserDetailsAuthority(application, accessLevel));
+	/**
+	 * Service should return an empty set when provided with a single invalid
+	 * authority
+	 */
+	@Test
+	public void service_Should_Return_Empty_Set_For_Single_Invalid_Authority() {
 
-        application = getApplication(UUID.randomUUID().toString(), true);
-        accessLevel = getAccessLevel(new Double(Math.random()).intValue());
-        userDetailsAuthorities.add(new UserDetailsAuthority(application, accessLevel));
+		logger.info("service_Should_Return_Empty_Set_For_Single_Invalid_Authority");
+		//
+		// Inactive application
+		//
+		String expApplicationName = UUID.randomUUID().toString();
+		Integer expAccessLevelId = new Double(Math.random()).intValue();
+		Application application = getMockApplication(expApplicationName, false);
 
-        application = getApplication(UUID.randomUUID().toString(), false);
-        accessLevel = getAccessLevel(new Double(Math.random()).intValue());
-        userDetailsAuthorities.add(new UserDetailsAuthority(application, accessLevel));
+		AccessLevel accessLevel = getMockAccessLevel(expAccessLevelId);
+		userDetailsAuthorities.add(new UserDetailsAuthority(application, accessLevel));
 
-        instance = new AccountServiceUserDetails(null, userDetailsAuthorities);
-        Collection<? extends GrantedAuthority> result = instance.getAuthorities();
-        assertNotNull(result);
-        assertTrue(result instanceof Set<?>);
-        int expSize = 0;
-        int resultSize = result.size();
-        assertEquals(expSize, resultSize);
-    }
+		instance = new AccountServiceUserDetails(null, userDetailsAuthorities);
+		Collection<? extends GrantedAuthority> result = instance.getAuthorities();
+		assertTrue(result instanceof Set<?>);
+		final int empty = 0;
+		assertEquals(empty, result.size());
+		//
+		// Inactive account user
+		//
+		expApplicationName = UUID.randomUUID().toString();
+		expAccessLevelId = new Double(Math.random()).intValue();
+		application = getMockApplication(expApplicationName, false);
+		accessLevel = getMockAccessLevel(expAccessLevelId);
+		userDetailsAuthorities.clear();
+		userDetailsAuthorities.add(new UserDetailsAuthority(application, accessLevel));
 
-    @Test
-    public void testGetAuthorities_OneValidAuthority() {
+		instance = new AccountServiceUserDetails(null, userDetailsAuthorities);
+		result = instance.getAuthorities();
+		assertTrue(result instanceof Set<?>);
+		assertEquals(empty, result.size());
+	}
 
-        logger.info("testGetAuthorities_OneValidAuthority");
-        //
-        //  
-        //
-        String expApplicationName = UUID.randomUUID().toString();
-        Integer expAccessLevelId = new Double(Math.random()).intValue();
-        String expAuthority = expApplicationName + authoritySeparator + accessLevelRole.name();
-        Application application = getApplication(expApplicationName, true);
-        //       AccountUser accountUser = getAccountUser(expAccessLevelId, true);
-        AccessLevel accessLevel = getAccessLevel(expAccessLevelId);
-        userDetailsAuthorities.add(new UserDetailsAuthority(application, accessLevel));
+	/**
+	 * Service should return an empty set when provided with multiple invalid
+	 * authorities
+	 */
+	// @Test
+	public void service_Should_Return_Empty_Set_For_Multiple_Invalid_Authority() {
 
-        instance = new AccountServiceUserDetails(null, userDetailsAuthorities);
-        Collection<? extends GrantedAuthority> result = instance.getAuthorities();
-        assertNotNull(result);
-        assertTrue(result instanceof Set<?>);
-        int expSize = 1;
-        int resultSize = result.size();
-        assertEquals(expSize, resultSize);
-        //
-        //
-        //
-        GrantedAuthority grantedAuthority0 = (GrantedAuthority) result.toArray()[0];
-        String resultAuthority = grantedAuthority0.getAuthority();
-        assertEquals(expAuthority, resultAuthority);
-    }
+		logger.info("service_Should_Return_Empty_Set_For_Multiple_Invalid_Authority");
 
-    @Test
-    public void testGetAuthorities_OneValidOneInvalidAuthority() {
+		Application application = getMockApplication(UUID.randomUUID().toString(), false);
+		AccessLevel accessLevel = getMockAccessLevel(new Double(Math.random()).intValue());
+		userDetailsAuthorities.add(new UserDetailsAuthority(application, accessLevel));
 
-        logger.info("testGetAuthorities_OneValidOneInvalidAuthority");
-        //
-        //  Valid authority
-        //
-        String expApplicationName = UUID.randomUUID().toString();
-        Integer expAccessLevelId = new Double(Math.random()).intValue();
-        String expAuthority = expApplicationName + authoritySeparator + accessLevelRole.name();
-        Application application = getApplication(expApplicationName, true);
-        //       AccountUser accountUser = getAccountUser(expAccessLevelId, true);
-        AccessLevel accessLevel = getAccessLevel(expAccessLevelId);
-        userDetailsAuthorities.add(new UserDetailsAuthority(application, accessLevel));
-        //
-        //  Invalid authority
-        //
-        application = getApplication(UUID.randomUUID().toString(), false);
-        //       accountUser = getAccountUser(new Double(Math.random()).intValue(), false);
-        accessLevel = getAccessLevel(expAccessLevelId);
-        userDetailsAuthorities.add(new UserDetailsAuthority(application, accessLevel));
+		application = getMockApplication(UUID.randomUUID().toString(), false);
+		accessLevel = getMockAccessLevel(new Double(Math.random()).intValue());
+		userDetailsAuthorities.add(new UserDetailsAuthority(application, accessLevel));
 
-        instance = new AccountServiceUserDetails(null, userDetailsAuthorities);
-        Collection<? extends GrantedAuthority> result = instance.getAuthorities();
-        assertNotNull(result);
-        assertTrue(result instanceof Set<?>);
-        int expSize = 1;
-        int resultSize = result.size();
-        assertEquals(expSize, resultSize);
-        //
-        //
-        //
-        GrantedAuthority grantedAuthority0 = (GrantedAuthority) result.toArray()[0];
-        String resultAuthority = grantedAuthority0.getAuthority();
-        assertEquals(expAuthority, resultAuthority);
-    }
+		application = getMockApplication(UUID.randomUUID().toString(), false);
+		accessLevel = getMockAccessLevel(new Double(Math.random()).intValue());
+		userDetailsAuthorities.add(new UserDetailsAuthority(application, accessLevel));
 
-    @Test
-    public void testGetAuthorities_TwoValidAuthorities() {
+		instance = new AccountServiceUserDetails(null, userDetailsAuthorities);
+		Collection<? extends GrantedAuthority> result = instance.getAuthorities();
+		assertTrue(result instanceof Set<?>);
+		int empty = 0;
+		assertEquals(empty, result.size());
+	}
 
-        logger.info("testGetAuthorities_TwoValidAuthorities");
-        //
-        //  Valid authority 1
-        //
-        String expApplicationName1 = UUID.randomUUID().toString();
-        Integer expAccessLevelId1 = new Double(Math.random()).intValue();
-        String expAuthority1 = expApplicationName1 + authoritySeparator + accessLevelRole.name();
-        Application application1 = getApplication(expApplicationName1, true);
-//        AccountUser accountUser1 = getAccountUser(expAccessLevelId1, true);
-        AccessLevel accessLevel1 = getAccessLevel(expAccessLevelId1);
-        userDetailsAuthorities.add(new UserDetailsAuthority(application1, accessLevel1));
-        //
-        //  Valid authority 2
-        //
-        String expApplicationName2 = UUID.randomUUID().toString();
-        Integer expAccessLevelId2 = new Double(Math.random()).intValue();
-        String expAuthority2 = expApplicationName2 + authoritySeparator +  ADMIN.name();
-        Application application2 = getApplication(expApplicationName2, true);
-        //       AccountUser accountUser2 = getAccountUser(expAccessLevelId2, true);
-        AccessLevel accessLevel2 = getAccessLevel(expAccessLevelId2);
-        when(accessLevel2.getAccountServiceRole()).thenReturn(ADMIN);
-        userDetailsAuthorities.add(new UserDetailsAuthority(application2, accessLevel2));
+	/**
+	 * Service should return a valid authority
+	 */
+	@Test
+	public void service_Should_Return_Correct_Single_Valid_Authority() {
 
-        instance = new AccountServiceUserDetails(null, userDetailsAuthorities);
-        Collection<? extends GrantedAuthority> result = instance.getAuthorities();
-        assertNotNull(result);
-        assertTrue(result instanceof Set<?>);
-        int expSize = 2;
-        int resultSize = result.size();
-        assertEquals(expSize, resultSize);
-        //
-        //
-        //
-        String[] authorities = new String[expSize];
-        int index = 0;
-        for (GrantedAuthority authority : result) {
-            authorities[index++] = authority.getAuthority();
-        }
-        List<String> authoritiesList = Arrays.asList(authorities);
-        assertTrue(authoritiesList.contains(expAuthority1));
-        assertTrue(authoritiesList.contains(expAuthority2));
-    }
+		logger.info("service_Should_Return_Correct_Single_Valid_Authority");
+		//
+		//
+		//
+		final String expApplicationName = UUID.randomUUID().toString();
+		final Integer expAccessLevelId = new Double(Math.random()).intValue();
+		final String expAuthority = expApplicationName + DataConstants.AUTHORITY_SEPARATOR + ACCESS_LEVEL_ROLE.name();
+		Application application = getMockApplication(expApplicationName, true);
+		AccessLevel accessLevel = getMockAccessLevel(expAccessLevelId);
+		userDetailsAuthorities.add(new UserDetailsAuthority(application, accessLevel));
 
-    //
-    //
-    //
-    private User getUser(final String userName, final String password, final boolean active) {
+		instance = new AccountServiceUserDetails(null, userDetailsAuthorities);
+		Collection<? extends GrantedAuthority> result = instance.getAuthorities();
+		assertTrue(result instanceof Set<?>);
+		int single = 1;
+		assertEquals(single, result.size());
+		//
+		//
+		//
+		String resultAuthority = result.stream().findFirst().get().getAuthority();
+		assertEquals(expAuthority, resultAuthority);
+	}
 
-        User user = mock(User.class);
-        when(user.getUserEmail()).thenReturn(userName);
-        when(user.getUserPassword()).thenReturn(password.getBytes());
-        //       when(user.getActive()).thenReturn(active);
-        when(user.isEnabled()).thenReturn(active);
-        return user;
-    }
+	/**
+	 * Service should return only the valid authority when supplied with one
+	 * valid and one invalid Application
+	 */
+	@Test
+	public void service_Should_Return_CorrectAuthority_When_Supplied_With_Both_Valid_And_Invalid() {
 
-    private Application getApplication(final String applicationName, final boolean active) {
+		logger.info("service_Should_Return_CorrectAuthority_When_Supplied_With_Both_Valid_And_Invalid");
+		//
+		// Valid authority
+		//
+		final String expApplicationName = UUID.randomUUID().toString();
+		final Integer expAccessLevelId = new Double(Math.random()).intValue();
+		final String expAuthority = expApplicationName + DataConstants.AUTHORITY_SEPARATOR + ACCESS_LEVEL_ROLE.name();
+		Application application = getMockApplication(expApplicationName, true);
+		AccessLevel accessLevel = getMockAccessLevel(expAccessLevelId);
+		userDetailsAuthorities.add(new UserDetailsAuthority(application, accessLevel));
+		//
+		// Invalid authority
+		//
+		application = getMockApplication(UUID.randomUUID().toString(), false);
+		accessLevel = getMockAccessLevel(expAccessLevelId);
+		userDetailsAuthorities.add(new UserDetailsAuthority(application, accessLevel));
 
-        Application application = mock(Application.class);
-        when(application.getName()).thenReturn(applicationName);
-//        when(application.getActive()).thenReturn(active);
-        when(application.isEnabled()).thenReturn(active);
-        return application;
-    }
+		instance = new AccountServiceUserDetails(null, userDetailsAuthorities);
+		Collection<? extends GrantedAuthority> result = instance.getAuthorities();
+		assertTrue(result instanceof Set<?>);
+		int single = 1;
+		assertEquals(single, result.size());
+		//
+		//
+		//
+		String resultAuthority = result.stream().findFirst().get().getAuthority();
+		assertEquals(expAuthority, resultAuthority);
+	}
+	/**
+	 * Service should return all the valid authorities when supplied with multiple valid Applications
+	 */
+	@Test
+	public void service_Should_Return_Correct_Authorities_When_Supplied_With_Multiple_Valid() {
 
-    private AccountUser getAccountUser(final Integer accessLevelId, final boolean active) {
+		logger.info("service_Should_Return_Correct_Authorities_When_Supplied_With_Multiple_Valid");
+		//
+		// Valid authority 1
+		//
+		final String expApplicationName1 = UUID.randomUUID().toString();
+		final Integer expAccessLevelId1 = new Double(Math.random()).intValue();
+		final String expAuthority1 = expApplicationName1 + DataConstants.AUTHORITY_SEPARATOR + ACCESS_LEVEL_ROLE.name();
+		Application application1 = getMockApplication(expApplicationName1, true);
+		AccessLevel accessLevel1 = getMockAccessLevel(expAccessLevelId1);
+		userDetailsAuthorities.add(new UserDetailsAuthority(application1, accessLevel1));
+		//
+		// Valid authority 2
+		//
+		final String expApplicationName2 = UUID.randomUUID().toString();
+		final Integer expAccessLevelId2 = new Double(Math.random()).intValue();
+		final String expAuthority2 = expApplicationName2 + DataConstants.AUTHORITY_SEPARATOR + ADMIN.name();
+		Application application2 = getMockApplication(expApplicationName2, true);
+		AccessLevel accessLevel2 = getMockAccessLevel(expAccessLevelId2, ADMIN);
+		userDetailsAuthorities.add(new UserDetailsAuthority(application2, accessLevel2));
 
-        AccountUser accountuser = mock(AccountUser.class);
-        when(accountuser.getAccessLevelId()).thenReturn(accessLevelId);
-//        when(accountuser.getActive()).thenReturn(active);
-        when(accountuser.isEnabled()).thenReturn(active);
-        return accountuser;
-    }
 
-    private AccessLevel getAccessLevel(final Integer accessLevelId) {
+		instance = new AccountServiceUserDetails(null, userDetailsAuthorities);
+		Collection<? extends GrantedAuthority> result = instance.getAuthorities();
+		assertTrue(result instanceof Set<?>);
+		int both = 2;
+		assertEquals(both, result.size());
+		//
+		//
+		//
+		List<String> resultAuthorities = result.stream().map(a -> a.getAuthority()).collect(Collectors.toList());
+		assertTrue(resultAuthorities.contains(expAuthority1));
+		assertTrue(resultAuthorities.contains(expAuthority2));
+	}
 
-        AccessLevel accessLevel = mock(AccessLevel.class);
-        when(accessLevel.getId()).thenReturn(accessLevelId);
-        when(accessLevel.getAccountServiceRole()).thenReturn(accessLevelRole);
-        return accessLevel;
-    }
+	//
+	//
+	//
+	private User getMockUser(final String userKey, final String password, final boolean enabled) {
+
+		User user = mock(User.class);
+		when(user.getUserKey()).thenReturn(userKey);
+		when(user.getUserPassword()).thenReturn(password.getBytes());
+		when(user.isEnabled()).thenReturn(enabled);
+		return user;
+	}
+
+	private Application getMockApplication(final String applicationName, final boolean enabled) {
+
+		Application application = mock(Application.class);
+		when(application.getName()).thenReturn(applicationName);
+		when(application.isEnabled()).thenReturn(enabled);
+		return application;
+	}
+
+	private AccessLevel getMockAccessLevel(final Integer accessLevelId) {
+
+		return getMockAccessLevel(accessLevelId, ACCESS_LEVEL_ROLE);
+	}
+	
+	private AccessLevel getMockAccessLevel(final Integer accessLevelId, AccountServiceRole role) {
+
+		AccessLevel accessLevel = mock(AccessLevel.class);
+		when(accessLevel.getId()).thenReturn(accessLevelId);
+		when(accessLevel.getAccountServiceRole()).thenReturn(role);
+		return accessLevel;
+	}
 }

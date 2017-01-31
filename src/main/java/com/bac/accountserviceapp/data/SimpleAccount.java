@@ -6,6 +6,9 @@
 package com.bac.accountserviceapp.data;
 
 import java.util.Date;
+import java.util.Objects;
+
+import com.bac.accountserviceapp.Account;
 
 /**
  *
@@ -22,6 +25,19 @@ public class SimpleAccount implements Account {
     public SimpleAccount() {
 
     }
+   
+	//
+	// Package only access to clone an Account
+	//
+	SimpleAccount(Account account) {
+
+		Objects.requireNonNull(account, "Attempt to instantiate with a null account");
+		id = account.getId();
+		applicationId = account.getApplicationId();
+		resourceName = account.getResourceName();
+		isEnabled = account.isEnabled();
+		createDate = account.getCreateDate();
+	}
 
     @Override
     public Integer getId() {
@@ -74,5 +90,38 @@ public class SimpleAccount implements Account {
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((applicationId == null) ? 0 : applicationId.hashCode());
+		result = prime * result + ((createDate == null) ? 0 : createDate.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((resourceName == null) ? 0 : resourceName.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		SimpleAccount other = (SimpleAccount) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "SimpleAccount [id=" + id + ", applicationId=" + applicationId + ", resourceName=" + resourceName
+				+ ", enabled=" + isEnabled + ", createDate=" + createDate + "]";
+	}
 
 }

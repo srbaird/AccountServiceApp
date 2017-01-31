@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.bac.accountserviceapp.data.mysql;
+package com.bac.accountserviceapp.data;
 
 import com.bac.accountservice.AccountServiceRole;
 import static com.bac.accountservice.AccountServiceRole.*;
@@ -19,6 +19,10 @@ public class DataConstants {
     public static final Character ACTIVE = 'Y';
     public static final Character INACTIVE = 'N';
     //
-    public static final AccountServiceRole defaultAccountServiceRole = OWNER;
+    public static final AccountServiceRole DEFAULT_ACCOUNT_SERVICE_ROLE = GUEST;
+    //
+    public static final String AUTHORITY_SEPARATOR = "::";
+    public static final String AUTHORITY_FORMAT = "%s%s%s";
+    public static final String AUTHORITY_STRING_PATTERN = "(.*)"+ AUTHORITY_SEPARATOR + "(.*)";
     
 }

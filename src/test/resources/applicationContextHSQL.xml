@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd 
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd">
+
+
+
+
+	<!-- In-memory SQL database -->
+
+	<jdbc:embedded-database id="dataSource" type="HSQL" /> 
+
+	<!-- Hibernate Session Factory -->
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="accountServiceHibernate.cfg.xml" />
+		<property name="packagesToScan" value="com.bac.accountserviceapp.hibernate"></property>
+
+	</bean>
+
+	<!-- Hibernate Transaction Manager -->
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<tx:annotation-driven />
+
+
+	<!-- Valid Application Account instance -->
+
+	<bean id="accountAccessor"
+		class="com.bac.accountserviceapp.hibernate.HibernateAccountAccessor" />
+
+	<!-- Proxy Object factory -->
+
+	<bean id="objectFactory"
+		class="com.bac.accountserviceapp.hibernate.HibernateEntityProxyObjectFactory" />
+
+    <!--        
+        ***************************************************************************************************
+        User Details composer
+        ***************************************************************************************************
+    --> 
+    <bean id="userDetailsService" class="com.bac.accountserviceapp.data.UserDetailsServiceImpl">
+        <property name="access" ref="accountAccessor"/>
+    </bean>
+    
+   <!--        
+        ***************************************************************************************************
+        Account Service Strategy to encapsulate methods for creating Users
+        ***************************************************************************************************
+    --> 
+    <bean id="accountServiceStrategy" class="com.bac.accountserviceapp.data.AccountServiceStrategyImpl">
+        <property name="accountAccessor" ref="accountAccessor"/>
+    </bean>
+
+    <!--        
+        ***************************************************************************************************
+        Authentication Manager instance
+        ***************************************************************************************************
+    --> 
+    <bean id="authenticationManager" class="org.springframework.security.authentication.ProviderManager">
+        <property name="providers">
+            <list>
+                <ref local="daoAuthenticationProvider"/>
+            </list>
+        </property>
+    </bean>
+    
+    <!--        
+        ***************************************************************************************************
+        Default DAO authentication
+        ***************************************************************************************************
+    --> 
+    <bean id="daoAuthenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+        <property name="userDetailsService" ref="userDetailsService"/>
+        <property name="passwordEncoder" ref="passwordEncoder"/>
+        <property name="hideUserNotFoundExceptions" value="false"/>
+    </bean>
+    <!--        
+        ***************************************************************************************************
+        Supplied Spring Password Encoder
+        ***************************************************************************************************
+    --> 
+    <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+  
+  <!--        
+        ***************************************************************************************************
+        Account Service Application to manage logins
+        ***************************************************************************************************
+  --> 
+      <bean id="accountServiceApp" class="com.bac.accountserviceapp.data.AccountServiceApp">
+    </bean>
+
+
+</beans>

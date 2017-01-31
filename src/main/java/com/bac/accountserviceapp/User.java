@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.bac.accountserviceapp.data;
+package com.bac.accountserviceapp;
 
 import java.util.Date;
 import java.util.Set;
@@ -20,9 +20,9 @@ public interface User extends AccessByPrimaryKey, Enableable {
 
     void setUserName(String userName);
 
-    String getUserEmail();
+    String getUserKey();
 
-    void setUserEmail(String userEmail);
+    void setUserKey(String userKey);
 
     byte[] getUserPassword();
 
@@ -31,10 +31,6 @@ public interface User extends AccessByPrimaryKey, Enableable {
     byte[] getPasswordSalt();
 
     void setPasswordSalt(byte[] pSalt);
-
-//    Character getActive();
-
-//    void setActive(Character active);
 
     Date getCreateDate();
 
