@@ -16,14 +16,12 @@ Authentication is carried out using the Spring [ProviderManager](http://docs.spr
   </property>
 </bean>
 
-
-
 <bean id="daoAuthenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
   <property name="userDetailsService" ref="inMemoryDaoImpl"/>
   <property name="passwordEncoder" ref="passwordEncoder"/>
 </bean>
 ```
-
+Encryption uses [bcryprt]( https://en.wikipedia.org/wiki/Bcrypt/) through the supplied [BCryptPasswordEncoder](http://docs.spring.io/autorepo/docs/spring-security/current/apidocs/org/springframework/security/crypto/bcrypt/BCryptPasswordEncoder.html/). Other functions are available in the current Spring Security release.
 
 For convenience the project incorporates both the definition of the data model requirements and an implementation using Hibernate and a relational database design. In normal circumstances these would be separate projects and this may be easily achieved by separating out the relevant Hibernate package if required.
 
