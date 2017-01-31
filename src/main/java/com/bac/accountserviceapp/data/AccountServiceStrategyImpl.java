@@ -9,6 +9,7 @@ import java.util.Objects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bac.accountservice.AccountServiceRole;
 import com.bac.accountserviceapp.AccessLevel;
@@ -24,7 +25,9 @@ import com.bac.accountserviceapp.User;
  */
 public class AccountServiceStrategyImpl extends AccountServiceStrategy {
 
+	@Autowired
     private AccountAccess accountAccessor;
+	
     private final String INVALID_USER_MSG = "An invalid user was supplied";
     // logger
     private static final Logger logger = LoggerFactory.getLogger(AccountServiceStrategyImpl.class);

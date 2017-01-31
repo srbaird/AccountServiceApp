@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -28,6 +29,7 @@ import com.bac.accountserviceapp.User;
  */
 public class UserDetailsServiceImpl implements UserDetailsService {
 
+	@Autowired
 	private AccountAccess access;
 	//
 	private final String NULL_ACCESSOR_MSG = "No instance of AccountAccess supplied";

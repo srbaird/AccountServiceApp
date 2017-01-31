@@ -34,7 +34,7 @@
 	<tx:annotation-driven />
 
 
-	<!-- Valid Application Account instance -->
+	<!-- Valid Account Accessor instance - the DAO  -->
 
 	<bean id="accountAccessor"
 		class="com.bac.accountserviceapp.hibernate.HibernateAccountAccessor" />
@@ -49,18 +49,16 @@
         User Details composer
         ***************************************************************************************************
     --> 
-    <bean id="userDetailsService" class="com.bac.accountserviceapp.data.UserDetailsServiceImpl">
-        <property name="access" ref="accountAccessor"/>
-    </bean>
+    <bean id="userDetailsService" class="com.bac.accountserviceapp.data.UserDetailsServiceImpl" />
+
     
    <!--        
         ***************************************************************************************************
         Account Service Strategy to encapsulate methods for creating Users
         ***************************************************************************************************
     --> 
-    <bean id="accountServiceStrategy" class="com.bac.accountserviceapp.data.AccountServiceStrategyImpl">
-        <property name="accountAccessor" ref="accountAccessor"/>
-    </bean>
+    <bean id="accountServiceStrategy" class="com.bac.accountserviceapp.data.AccountServiceStrategyImpl" />
+
 
     <!--        
         ***************************************************************************************************
