@@ -1,7 +1,7 @@
-# Account Access App
+# Account Service App
 
 
-An implementation of [Spring Security](http://projects.spring.io/spring-security/) to provide a simple database backed authentication method that is intended to run a s a remote service such as an EJB. It was developed to provide a common service for all my web applications to authenticate user access through database configuration. The interface exposes a login using the Spring [AbstractAuthenticationToken](http://docs.spring.io/autorepo/docs/spring-security/current/apidocs/org/springframework/security/authentication/AbstractAuthenticationToken.html/ request as well as application specific methods to authenticate an application and create a login. A second login method is provided to use an application provided login request format.
+This is an implementation of [Spring Security](http://projects.spring.io/spring-security/) to provide a simple database backed authentication method that is intended to run as a remote service such as an EJB. It was developed to provide a common service for all my web applications to authenticate user access through database configuration. The interface exposes a login using the Spring [AbstractAuthenticationToken](http://docs.spring.io/autorepo/docs/spring-security/current/apidocs/org/springframework/security/authentication/AbstractAuthenticationToken.html) request as well as application specific methods to authenticate an application and create a login. A second login method is provided to use an application provided login request format.
 
 Authentication is carried out using the Spring [ProviderManager](http://docs.spring.io/autorepo/docs/spring-security/current/apidocs/org/springframework/security/authentication/ProviderManager.html) which is configured in a similar fashion to the following example. A full test configuration is available [here](https://github.com/srbaird/AccountServiceApp/blob/master/src/test/resources/applicationContextHSQL.xml)
 
@@ -23,9 +23,11 @@ Authentication is carried out using the Spring [ProviderManager](http://docs.spr
 ```
 Encryption uses [bcryprt]( https://en.wikipedia.org/wiki/Bcrypt) through the supplied [BCryptPasswordEncoder](http://docs.spring.io/autorepo/docs/spring-security/current/apidocs/org/springframework/security/crypto/bcrypt/BCryptPasswordEncoder.html). Other functions are available in the current Spring Security release.
 
+___
+
 For convenience the project incorporates both the definition of the data model requirements and an implementation using Hibernate and a relational database design. In normal circumstances these would be separate projects and this may be easily achieved by separating out the relevant Hibernate package if required.
 
-The data model is quite simple and naturally open to enhancements but suffices as a starting point. The following diagram shows that it basically implements a many-to-many relationship between users and accounts. Access can be controlled at any of the AccountUser, Account or Application levels.
+The data model is quite simple and naturally open to enhancements but suffices as a starting point. The following diagram shows that it basically implements a many-to-many relationship between users and accounts. Access can be controlled at any of the AccountUser, Account or Application levels and the Application can be closed to new sign-ups if required.
 
 <p align="center">
 <img src="https://github.com/srbaird/AccountServiceApp/blob/master/documents/datamodel.jpg" alt="Data model"  >
