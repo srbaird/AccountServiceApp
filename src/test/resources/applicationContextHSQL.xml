@@ -13,7 +13,7 @@
         Account Service Application to manage logins
         ***************************************************************************************************
   -->   
-      <bean id="accountServiceApp" class="com.bac.accountserviceapp.data.AccountServiceApp"/>
+      <bean id="accountServiceApp" class="com.bac.accountserviceapp.impl.AccountServiceApp"/>
 
   <!--        
         ***************************************************************************************************
@@ -32,7 +32,7 @@
         User Details composer
         ***************************************************************************************************
     --> 
-    <bean id="userDetailsService" class="com.bac.accountserviceapp.data.UserDetailsServiceImpl" />
+    <bean id="userDetailsService" class="com.bac.accountserviceapp.impl.UserDetailsServiceImpl" />
 
     
    <!--        
@@ -40,7 +40,7 @@
         Account Service Strategy to encapsulate methods for creating Users
         ***************************************************************************************************
     --> 
-    <bean id="accountServiceStrategy" class="com.bac.accountserviceapp.data.AccountServiceStrategyImpl" />
+    <bean id="accountServiceStrategy" class="com.bac.accountserviceapp.impl.AccountServiceStrategyImpl" />
 
 
     <!--        
