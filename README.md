@@ -33,11 +33,23 @@ The data model is quite simple and naturally open to enhancements but suffices a
 <img src="https://github.com/srbaird/AccountServiceApp/blob/master/documents/datamodel.jpg" alt="Data model"  >
 </p>
 
-This project does not provide an interface into maintaining the data model but does implement a simple DAO pattern which provides many of the methods for this purpose. These are used in the test files which carry out the basic CRUD actions. Testing uses the HSQLDB in-memory database which means that no RDBMS needs to be installed but if DDL is required then the following is the Hibernate output may suffice to create a permanent database
+This project does not provide an interface into maintaining the data model but does implement a simple DAO pattern which provides many of the methods for this purpose. These are used in the test files which carry out the basic CRUD actions. Testing uses the HSQLDB in-memory database which means that no RDBMS needs to be installed but if DDL is required then the following is the Hibernate output (constraint names slightly amended) may be used to create a MySQL database.
 
 
 ```
-TODO: Add example DDL here... 
+create table access_level (id integer not null auto_increment, description varchar(255), primary key (id));
+create table account (id integer not null auto_increment, active char(1) not null, application_id integer not null, create_date datetime, resource_name varchar(255), primary key (id));
+create table account_user (user_id integer not null, account_id integer not null, access_level_id integer not null, account_message varchar(255), create_date datetime, enabled bit not null, last_access_date datetime, primary key (user_id, account_id));
+create table application (id integer not null auto_increment, enabled bit not null, name varchar(255), registrationOpen bit not null, primary key (id));
+create table user (id integer not null auto_increment, create_date datetime, enabled bit not null, password_salt tinyblob, user_key varchar(255), user_name varchar(255), user_password tinyblob, primary key (id));
+alter table application add constraint UK_lspnba25gpku3nx3oecprrx8c  unique (name);
+
+alter table user add constraint UK_USER_USER_KEY  unique (user_key);
+
+alter table account add constraint FK_ACCOUNT_APPLICATION_ID_TO_APPLICTION_ID foreign key (application_id) references application (id);
+alter table account_user add constraint FK_ACCOUNT_USER_ACCOUNT_TO_ID_ACCOUNT_ID foreign key (account_id) references account (id);
+alter table account_user add constraint FK_ACCOUNT_USER_USER_ID_TO_USER_ID foreign key (user_id) references user (id);
+alter table account_user add constraint FK_ACCOUNT_USER_ACCESS_LEVEL_ID_TO_ACCESS_LEVEL_ID foreign key (access_level_id) references access_level (id);
 ```
 
 

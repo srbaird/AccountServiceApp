@@ -79,8 +79,8 @@
         In-memory SQL database
         ***************************************************************************************************
   --> 
-	<jdbc:embedded-database id="dataSource" type="HSQL" /> 
-
+	<jdbc:embedded-database id="dataSource" type="HSQL" />
+		
   <!--        
         ***************************************************************************************************
          Hibernate Session Factory 
