@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.bac.accountserviceapp.data;
+package com.bac.accountserviceapp.impl;
 
 import static com.bac.accountservice.AccountServiceRole.ADMIN;
 import static com.bac.accountservice.AccountServiceRole.GUEST;
@@ -32,6 +32,9 @@ import com.bac.accountservice.AccountServiceRole;
 import com.bac.accountserviceapp.AccessLevel;
 import com.bac.accountserviceapp.Application;
 import com.bac.accountserviceapp.User;
+import com.bac.accountserviceapp.impl.AccountServiceUserDetails;
+import com.bac.accountserviceapp.impl.DataConstants;
+import com.bac.accountserviceapp.impl.UserDetailsAuthority;
 
 /**
  *

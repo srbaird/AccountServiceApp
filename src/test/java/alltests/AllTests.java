@@ -6,7 +6,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({
-	com.bac.accountserviceapp.data.AllTests.class,
+	com.bac.accountserviceapp.impl.AllTests.class,
 	com.bac.accountserviceapp.hibernate.AllTests.class
 })
 public class AllTests {

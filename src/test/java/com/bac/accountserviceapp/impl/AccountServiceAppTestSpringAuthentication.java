@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.bac.accountserviceapp.data;
+package com.bac.accountserviceapp.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -23,6 +23,7 @@ import org.springframework.security.core.GrantedAuthority;
 import com.bac.accountservice.AccountServiceAuthenticationOutcome;
 import com.bac.accountservice.AccountServiceRole;
 import com.bac.accountserviceapp.Application;
+import com.bac.accountserviceapp.impl.DataConstants;
 
 /**
  *

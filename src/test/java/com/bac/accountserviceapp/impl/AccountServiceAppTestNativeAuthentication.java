@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.bac.accountserviceapp.data;
+package com.bac.accountserviceapp.impl;
 
 import static com.bac.accountservice.AccountServiceAuthenticationOutcome.NO_ROLE;
 import static org.junit.Assert.assertEquals;

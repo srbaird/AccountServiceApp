@@ -9,6 +9,13 @@
 
 	<name>AccountServiceApp</name>
 
+	<repositories>
+		<repository>
+			<id>local-repository</id>
+			<url>http://localhost/repo</url>
+		</repository>
+	</repositories>
+
 	<properties>
 		<endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

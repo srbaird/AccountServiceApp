@@ -9,7 +9,7 @@ import org.junit.Test;
 import  com.bac.accountservice.AccountServiceRole;
 import static com.bac.accountservice.AccountServiceRole.*;
 import com.bac.accountserviceapp.AccessLevel;
-import com.bac.accountserviceapp.data.SimpleComponentFactory;
+import com.bac.accountserviceapp.impl.SimpleComponentFactory;
 
 public class HibernateTestAccessLevel extends AbstractHibernateTestCase {
 

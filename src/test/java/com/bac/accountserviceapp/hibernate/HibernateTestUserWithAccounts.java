@@ -18,7 +18,7 @@ import com.bac.accountserviceapp.Account;
 import com.bac.accountserviceapp.AccountUser;
 import com.bac.accountserviceapp.Application;
 import com.bac.accountserviceapp.User;
-import com.bac.accountserviceapp.data.SimpleComponentFactory;
+import com.bac.accountserviceapp.impl.SimpleComponentFactory;
 
 public class HibernateTestUserWithAccounts extends AbstractHibernateTestCase {
 

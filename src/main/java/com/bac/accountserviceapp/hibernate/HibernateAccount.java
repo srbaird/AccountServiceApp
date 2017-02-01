@@ -5,8 +5,8 @@
  */
 package com.bac.accountserviceapp.hibernate;
 
-import static com.bac.accountserviceapp.data.DataConstants.ACTIVE;
-import static com.bac.accountserviceapp.data.DataConstants.INACTIVE;
+import static com.bac.accountserviceapp.impl.DataConstants.ACTIVE;
+import static com.bac.accountserviceapp.impl.DataConstants.INACTIVE;
 
 import java.util.Collections;
 import java.util.Date;
@@ -34,7 +34,7 @@ import com.bac.accountserviceapp.Account;
 import com.bac.accountserviceapp.AccountUser;
 import com.bac.accountserviceapp.Application;
 import com.bac.accountserviceapp.ApplicationAccountEntity;
-import com.bac.accountserviceapp.data.SimpleComponentFactory;
+import com.bac.accountserviceapp.impl.SimpleComponentFactory;
 
 /**
  *

@@ -8,7 +8,7 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.junit.Test;
 
 import com.bac.accountserviceapp.Application;
-import com.bac.accountserviceapp.data.SimpleComponentFactory;
+import com.bac.accountserviceapp.impl.SimpleComponentFactory;
 
 public class HibernateTestApplication extends AbstractHibernateTestCase {
 

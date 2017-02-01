@@ -24,7 +24,7 @@ import com.bac.accountservice.AccountServiceRole;
 import com.bac.accountserviceapp.AccessLevel;
 import com.bac.accountserviceapp.AccountUser;
 import com.bac.accountserviceapp.ApplicationAccountEntity;
-import com.bac.accountserviceapp.data.SimpleComponentFactory;
+import com.bac.accountserviceapp.impl.SimpleComponentFactory;
 
 /**
  *

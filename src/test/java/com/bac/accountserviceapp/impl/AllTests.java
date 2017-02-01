@@ -1,4 +1,4 @@
-package com.bac.accountserviceapp.data;
+package com.bac.accountserviceapp.impl;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;

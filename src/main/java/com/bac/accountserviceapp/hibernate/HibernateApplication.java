@@ -26,7 +26,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import com.bac.accountserviceapp.Account;
 import com.bac.accountserviceapp.Application;
 import com.bac.accountserviceapp.ApplicationAccountEntity;
-import com.bac.accountserviceapp.data.SimpleComponentFactory;
+import com.bac.accountserviceapp.impl.SimpleComponentFactory;
 
 /**
  *

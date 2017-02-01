@@ -1,4 +1,4 @@
-package com.bac.accountserviceapp.data;
+package com.bac.accountserviceapp.impl;
 
 import com.bac.accountserviceapp.AccessLevel;
 import com.bac.accountserviceapp.Account;

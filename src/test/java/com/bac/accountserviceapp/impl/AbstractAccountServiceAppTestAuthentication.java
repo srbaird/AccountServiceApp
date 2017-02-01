@@ -1,4 +1,4 @@
-package com.bac.accountserviceapp.data;
+package com.bac.accountserviceapp.impl;
 
 import static com.bac.accountservice.AccountServiceAuthenticationOutcome.AUTHENTICATED;
 import static com.bac.accountservice.AccountServiceAuthenticationOutcome.BAD_CREDENTIALS;
@@ -28,6 +28,8 @@ import com.bac.accountserviceapp.Account;
 import com.bac.accountserviceapp.AccountUser;
 import com.bac.accountserviceapp.Application;
 import com.bac.accountserviceapp.User;
+import com.bac.accountserviceapp.impl.AccountServiceApp;
+import com.bac.accountserviceapp.impl.SimpleComponentFactory;
 
 public abstract class AbstractAccountServiceAppTestAuthentication<T> extends AbstractHibernateTestCase {
 

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.bac.accountserviceapp.data;
+package com.bac.accountserviceapp.impl;
 
 import static com.bac.accountservice.AccountServiceAuthenticationOutcome.AUTHENTICATED;
 import static com.bac.accountservice.AccountServiceAuthenticationOutcome.NO_APPLICATION;
@@ -21,6 +21,8 @@ import org.slf4j.LoggerFactory;
 import com.bac.accountservice.AccountServiceApplication;
 import com.bac.accountservice.SimpleAccountServiceApplication;
 import com.bac.accountserviceapp.Application;
+import com.bac.accountserviceapp.impl.AccountServiceApp;
+import com.bac.accountserviceapp.impl.SimpleComponentFactory;
 
 /**
  *

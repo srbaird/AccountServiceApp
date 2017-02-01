@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.bac.accountserviceapp.data;
+package com.bac.accountserviceapp.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -23,6 +23,9 @@ import com.bac.accountserviceapp.Account;
 import com.bac.accountserviceapp.AccountUser;
 import com.bac.accountserviceapp.Application;
 import com.bac.accountserviceapp.User;
+import com.bac.accountserviceapp.impl.AccountServiceStrategy;
+import com.bac.accountserviceapp.impl.DataConstants;
+import com.bac.accountserviceapp.impl.SimpleComponentFactory;
 
 /**
  *

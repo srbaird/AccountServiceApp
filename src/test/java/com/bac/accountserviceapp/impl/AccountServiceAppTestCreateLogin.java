@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.bac.accountserviceapp.data;
+package com.bac.accountserviceapp.impl;
 
 import static com.bac.accountservice.AccountServiceAuthenticationOutcome.APPLICATION_CLOSED;
 import static com.bac.accountservice.AccountServiceAuthenticationOutcome.BAD_CREDENTIALS;
@@ -35,6 +35,9 @@ import com.bac.accountserviceapp.Account;
 import com.bac.accountserviceapp.AccountUser;
 import com.bac.accountserviceapp.Application;
 import com.bac.accountserviceapp.User;
+import com.bac.accountserviceapp.impl.AccountServiceApp;
+import com.bac.accountserviceapp.impl.DataConstants;
+import com.bac.accountserviceapp.impl.SimpleComponentFactory;
 
 /**
  *

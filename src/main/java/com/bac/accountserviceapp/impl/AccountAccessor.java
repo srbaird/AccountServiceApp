@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.bac.accountserviceapp.data;
+package com.bac.accountserviceapp.impl;
 
 import com.bac.accountserviceapp.AccountAccess;
 
