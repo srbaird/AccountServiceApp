@@ -38,12 +38,16 @@ This project does not provide an interface into maintaining the data model but d
 
 ```
 create table access_level (id integer not null auto_increment, description varchar(255), primary key (id));
-create table account (id integer not null auto_increment, active char(1) not null, application_id integer not null, create_date datetime, resource_name varchar(255), primary key (id));
-create table account_user (user_id integer not null, account_id integer not null, access_level_id integer not null, account_message varchar(255), create_date datetime, enabled bit not null, last_access_date datetime, primary key (user_id, account_id));
-create table application (id integer not null auto_increment, enabled bit not null, name varchar(255), registrationOpen bit not null, primary key (id));
-create table user (id integer not null auto_increment, create_date datetime, enabled bit not null, password_salt tinyblob, user_key varchar(255), user_name varchar(255), user_password tinyblob, primary key (id));
-alter table application add constraint UK_lspnba25gpku3nx3oecprrx8c  unique (name);
 
+create table account (id integer not null auto_increment, active char(1) not null, application_id integer not null, create_date datetime, resource_name varchar(255), primary key (id));
+
+create table account_user (user_id integer not null, account_id integer not null, access_level_id integer not null, account_message varchar(255), create_date datetime, enabled bit not null, last_access_date datetime, primary key (user_id, account_id));
+
+create table application (id integer not null auto_increment, enabled bit not null, name varchar(255), registrationOpen bit not null, primary key (id));
+
+create table user (id integer not null auto_increment, create_date datetime, enabled bit not null, password_salt tinyblob, user_key varchar(255), user_name varchar(255), user_password tinyblob, primary key (id));
+
+alter table application add constraint UK_APPLICATION_NAME  unique (name);
 alter table user add constraint UK_USER_USER_KEY  unique (user_key);
 
 alter table account add constraint FK_ACCOUNT_APPLICATION_ID_TO_APPLICTION_ID foreign key (application_id) references application (id);

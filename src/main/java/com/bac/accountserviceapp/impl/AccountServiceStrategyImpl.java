@@ -7,9 +7,12 @@ package com.bac.accountserviceapp.impl;
 
 import java.util.Objects;
 
+import javax.interceptor.Interceptors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
 
 import com.bac.accountservice.AccountServiceRole;
 import com.bac.accountserviceapp.AccessLevel;
@@ -23,6 +26,7 @@ import com.bac.accountserviceapp.User;
  *
  * @author Simon Baird
  */
+@Interceptors(SpringBeanAutowiringInterceptor.class)
 public class AccountServiceStrategyImpl extends AccountServiceStrategy {
 
 	@Autowired

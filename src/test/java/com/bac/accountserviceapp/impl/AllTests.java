@@ -10,9 +10,9 @@ import org.junit.runners.Suite.SuiteClasses;
 		AccountServiceAppTestCreateLogin.class,
 		AccountServiceAppTestNativeAuthentication.class, 
 		AccountServiceAppTestSpringAuthentication.class,
-		AccountServiceStrategyTest.class, 
-		AccountServiceUserDetailsTest.class, 
-		UserDetailsServiceTest.class })
+		AccountServiceStrategyTestAll.class, 
+		AccountServiceUserDetailsTestAll.class, 
+		UserDetailsServiceTestAll.class })
 public class AllTests {
 
 }

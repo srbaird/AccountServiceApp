@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.bac.accountserviceapp.impl;
 
 import static com.bac.accountservice.AccountServiceRole.ADMIN;
@@ -38,9 +34,9 @@ import com.bac.accountserviceapp.impl.UserDetailsAuthority;
 
 /**
  *
- * @author user0001
+ * @author Simon Baird
  */
-public class AccountServiceUserDetailsTest {
+public class AccountServiceUserDetailsTestAll {
 
 	private AccountServiceUserDetails instance;
 	private Collection<UserDetailsAuthority> userDetailsAuthorities;
@@ -48,9 +44,9 @@ public class AccountServiceUserDetailsTest {
 	private final AccountServiceRole ACCESS_LEVEL_ROLE = GUEST;
 
 	// logger
-	private static final Logger logger = LoggerFactory.getLogger(AccountServiceUserDetailsTest.class);
+	private static final Logger logger = LoggerFactory.getLogger(AccountServiceUserDetailsTestAll.class);
 
-	public AccountServiceUserDetailsTest() {
+	public AccountServiceUserDetailsTestAll() {
 	}
 
 	@BeforeClass

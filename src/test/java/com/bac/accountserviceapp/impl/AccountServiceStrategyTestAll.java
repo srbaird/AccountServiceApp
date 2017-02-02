@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.bac.accountserviceapp.impl;
 
 import static org.junit.Assert.assertEquals;
@@ -29,14 +25,14 @@ import com.bac.accountserviceapp.impl.SimpleComponentFactory;
 
 /**
  *
- * @author user0001
+ * @author Simon Baird
  */
-public class AccountServiceStrategyTest extends AbstractHibernateTestCase {
+public class AccountServiceStrategyTestAll extends AbstractHibernateTestCase {
 
 	@Resource(name = "accountServiceStrategy")
 	private AccountServiceStrategy instance;
 	// logger
-	private static final Logger logger = LoggerFactory.getLogger(AccountServiceStrategyTest.class);
+	private static final Logger logger = LoggerFactory.getLogger(AccountServiceStrategyTestAll.class);
 
 	/**
 	 * Newly instantiated instance should return the default AccountService role

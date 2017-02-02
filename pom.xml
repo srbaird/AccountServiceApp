@@ -80,7 +80,6 @@
 			<artifactId>hsqldb</artifactId>
 			<version>${hibernateMemoryDBVersion}</version>
 			<type>jar</type>
-			<scope>test</scope>
 		</dependency>
 		<!-- Hibernate dependencies -->
 		<dependency>

@@ -15,6 +15,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bac.accountserviceapp.AccessByPrimaryKey;
 import com.bac.accountserviceapp.AccessLevel;
@@ -26,8 +27,9 @@ import com.bac.accountserviceapp.User;
 
 /**
  *
- * @author user0001
+ * @author Simon Baird
  */
+@Transactional
 public class HibernateAccountAccessor implements AccountAccess {
 
 	private EntityProxyObjectFactory objectFactory;

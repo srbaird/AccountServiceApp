@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.bac.accountserviceapp.impl;
 
 import static com.bac.accountservice.AccountServiceRole.GUEST;
@@ -40,17 +36,17 @@ import com.bac.accountserviceapp.impl.SimpleComponentFactory;
 
 /**
  *
- * @author user0001
+ * @author Simon Baird
  */
-public class UserDetailsServiceTest extends AbstractHibernateTestCase {
+public class UserDetailsServiceTestAll extends AbstractHibernateTestCase {
 
 	@Resource(name = "userDetailsService")
 	UserDetailsService instance;
 
 	// logger
-	private static final Logger logger = LoggerFactory.getLogger(UserDetailsServiceTest.class);
+	private static final Logger logger = LoggerFactory.getLogger(UserDetailsServiceTestAll.class);
 
-	public UserDetailsServiceTest() {
+	public UserDetailsServiceTestAll() {
 	}
 
 	@BeforeClass
