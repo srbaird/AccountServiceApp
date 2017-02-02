@@ -32,8 +32,9 @@
         User Details composer
         ***************************************************************************************************
     --> 
-    <bean id="userDetailsService" class="com.bac.accountserviceapp.impl.UserDetailsServiceImpl" />
-
+    <bean id="userDetailsService" class="com.bac.accountserviceapp.impl.UserDetailsServiceImpl" >
+    	<property name="accountAccessor" ref="accountAccessor"/>
+    </bean>
     
    <!--        
         ***************************************************************************************************

@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -29,20 +28,20 @@ import com.bac.accountserviceapp.User;
  */
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-	@Autowired
-	private AccountAccess access;
+
+	private AccountAccess accountAccessor;
 	//
 	private final String NULL_ACCESSOR_MSG = "No instance of AccountAccess supplied";
 	private final String NAME_NOT_FOUND_MSG_FORMAT = "No instance of '%s' found";
 	// logger
 	private static final Logger logger = LoggerFactory.getLogger(AccountServiceUserDetailsService.class);
 
-	public AccountAccess getAccess() {
-		return access;
+	public AccountAccess getAccountAccessor() {
+		return accountAccessor;
 	}
 
-	public void setAccess(AccountAccess access) {
-		this.access = access;
+	public void setAccountAccessor(AccountAccess access) {
+		accountAccessor = access;
 	}
 
 	/*
@@ -54,13 +53,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 		logger.debug("Load user details for '{}'", userKey);
 
-		Objects.requireNonNull(access, NULL_ACCESSOR_MSG);
+		Objects.requireNonNull(accountAccessor, NULL_ACCESSOR_MSG);
 		//
 		// Read the User object by secondary key
 		//
 		User user = new SimpleUser();
 		user.setUserKey(userKey);
-		user = access.getUserBySecondaryKey(user);
+		user = accountAccessor.getUserBySecondaryKey(user);
 		if (user == null) {
 			throw new UsernameNotFoundException(String.format(NAME_NOT_FOUND_MSG_FORMAT, userKey));
 		}
@@ -86,7 +85,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			AccountUser accountUser = new SimpleAccountUser();
 			accountUser.setAccountId(account.getId());
 			accountUser.setUserId(user.getId());
-			accountUser = access.getAccountUser(accountUser);
+			accountUser = accountAccessor.getAccountUser(accountUser);
 			//
 			// Inactive user accounts should be skipped
 			//
@@ -94,7 +93,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				logger.debug("AccountUser is disabled");
 				continue;
 			}
-			Application application = access.getApplication(account.getApplicationId());
+			Application application = accountAccessor.getApplication(account.getApplicationId());
 			//
 			// Inactive application should be skipped
 			//
@@ -105,7 +104,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			//
 			// Populate
 			//
-			AccessLevel accessLevel = access.getAccessLevel(accountUser.getAccessLevelId());
+			AccessLevel accessLevel = accountAccessor.getAccessLevel(accountUser.getAccessLevelId());
 			UserDetailsAuthority uda = new UserDetailsAuthority(application, accessLevel);
 			userDetailsAuthorities.add(uda);
 		}
